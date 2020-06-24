@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         ItemsAdapter.OnClickListener onClickListener = new ItemsAdapter.OnClickListener() {
             @Override
             public void onItemClicked(int position) {
-                Log.d("MainActivity", "Single click at position " + position);
                 Intent i = new Intent(MainActivity.this, EditActivity.class);
                 i.putExtra(KEY_ITEM_TEXT, items.get(position));
                 i.putExtra(KEY_ITEM_POSITION, position);
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == EDIT_TEXT_CODE) {
             String itemText = data.getStringExtra(KEY_ITEM_TEXT);
             int position = data.getExtras().getInt(KEY_ITEM_POSITION);
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             items.set(position, itemText);
             itemsAdapter.notifyItemChanged(position);
             saveItems();
-            Toast.makeText(getApplicationContext(), "Item updated successfuly", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Item updated successfully", Toast.LENGTH_SHORT).show();
         } else {
             Log.w("MainActivity", " Unknown call to onActivityResult");
         }
